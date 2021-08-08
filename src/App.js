@@ -1,24 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom"; 
+import {useState} from 'react';
+import {ComplaintForm} from './components/ComplaintForm';
+import Thanks from './components/Thanks';
 
 function App() {
+  const [appValue,setAppValue] = useState({});
+
+  const changeDetails = (val) => {
+    setAppValue(val);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Router>
+     <Switch>
+       <Route exact path="/">
+         <Redirect to="/create-incident"></Redirect>
+       </Route>
+       <Route exact path="/create-incident">
+         <ComplaintForm values={changeDetails}/>
+       </Route>
+       <Route path="/thank-you" >
+         <Thanks details={appValue}/>
+       </Route>
+     </Switch>
+   </Router>
   );
 }
 
